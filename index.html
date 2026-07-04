@@ -176,4 +176,11 @@ function checkFresh(){
   if(!t){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}
   applyTheme(t);checkVersion();checkFresh();setInterval(checkFresh,60000);})();
 </script>
+<script>
+(function(){var b=document.getElementById('refreshBtn');if(!b)return;
+  b.textContent='🔄 重新載入';b.title='抓電腦最後推上來的最新快照（電腦睡/關時無新資料）';
+  b.onclick=function(){b.disabled=true;b.textContent='🔄 載入中…';
+    location.replace(location.pathname.replace(/\/index\.html$/,'/')+'?t='+Date.now());};
+})();
+</script>
 </body></html>
