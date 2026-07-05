@@ -178,9 +178,17 @@ function checkFresh(){
 </script>
 <script>
 (function(){var b=document.getElementById('refreshBtn');if(!b)return;
+  // 原「即時更新」在靜態頁打不到 /api → 改成「🔄 重新載入」抓最新推送快照
   b.textContent='🔄 重新載入';b.title='抓電腦最後推上來的最新快照（電腦睡/關時無新資料）';
   b.onclick=function(){b.disabled=true;b.textContent='🔄 載入中…';
     location.replace(location.pathname.replace(/\/index\.html$/,'/')+'?t='+Date.now());};
+  // 電腦連線時：開固定 Funnel 上的即時儀表板（真抓最新報價、更新後自動回推雲端）
+  var LIVE='https://laptop-injaa6i8.tailc94e58.ts.net:8443/';
+  var live=document.createElement('button');
+  live.className='themebtn';live.style.borderColor='#3fb950';live.style.color='#3fb950';
+  live.textContent='⚡ 即時更新';live.title='電腦連線時：開即時儀表板抓最新報價（需登入）';
+  live.onclick=function(){location.href=LIVE;};
+  b.parentNode.insertBefore(live,b);
 })();
 </script>
 </body></html>
