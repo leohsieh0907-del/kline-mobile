@@ -1390,7 +1390,7 @@ function renderWatchAnalysis(list) {
   }).join('');
 }
 
-function forceRefresh(btn){if(btn){btn.textContent="🔄 更新中…";btn.disabled=true;}location.replace(location.pathname+"?t="+Date.now());}
+var REFRESH_API="https://laptop-injaa6i8.tailc94e58.ts.net:8443";function pollRefresh(btn){var n=0;var iv=setInterval(function(){fetch(REFRESH_API+"/status").then(function(r){return r.json();}).then(function(j){n++;if(btn){btn.textContent="🔄 更新中…約"+((j.elapsed||n*8))+"秒";}if(!j.running){clearInterval(iv);if(j.last_ok){location.replace(location.pathname+"?t="+Date.now());}else{alert("更新失敗："+(j.last_msg||""));if(btn){btn.disabled=false;btn.textContent="🔄 一鍵更新";}}}}).catch(function(){});},8000);}function forceRefresh(btn){fetch(REFRESH_API+"/refresh",{method:"POST"}).then(function(r){return r.json();}).then(function(j){if(j.status==="cooldown"){alert("剛更新過，請約"+j.wait+"秒後再試");return;}if(btn){btn.disabled=true;btn.textContent="🔄 更新中…";}pollRefresh(btn);}).catch(function(e){if(confirm("即時後端連不上（電腦可能沒開機），改為重新載入最新『已發布』版本？")){location.replace(location.pathname+"?t="+Date.now());}});}
 function exportWatchList() {
   var list = loadWatchList();
   if (list.length === 0) { alert('觀察名單是空的！'); return; }
