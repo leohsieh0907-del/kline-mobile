@@ -261,6 +261,10 @@ body{font-family:'Segoe UI',sans-serif;background:#0f1117;color:#e0e0e0;min-heig
             style="padding:6px 16px;border-radius:8px;background:#2e7d32;color:#fff;border:none;cursor:pointer;font-size:12px;">
             💾 下載 watch_list.json
           </button>
+          <button onclick="forceRefresh(this)" title="重新載入最新已發布版本(排程06:00/17:00產生;非即時盤中報價)"
+            style="padding:6px 16px;border-radius:8px;background:#1565c0;color:#fff;border:none;cursor:pointer;font-size:12px;">
+            🔄 一鍵更新
+          </button>
         </div>
         <div id="watchGrid" style="display:flex;flex-wrap:wrap;gap:8px;min-height:40px;"></div>
         <div style="margin-top:14px;padding:10px 14px;background:#1a2744;border-radius:8px;font-size:11px;color:#555;">
@@ -1386,6 +1390,7 @@ function renderWatchAnalysis(list) {
   }).join('');
 }
 
+function forceRefresh(btn){if(btn){btn.textContent="🔄 更新中…";btn.disabled=true;}location.replace(location.pathname+"?t="+Date.now());}
 function exportWatchList() {
   var list = loadWatchList();
   if (list.length === 0) { alert('觀察名單是空的！'); return; }
